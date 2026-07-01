@@ -1,669 +1,335 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>數學 MC 練習</title>
-<style>
-body{
-  font-family:-apple-system,"Microsoft JhengHei",sans-serif;
-  max-width:720px;
-  margin:0 auto;
-  padding:16px;
-  background:#f5f5f7;
-  color:#1d1d1f;
-}
-h1{font-size:22px}
-.card{
-  background:#fff;
-  border-radius:12px;
-  padding:20px;
-  box-shadow:0 1px 4px rgba(0,0,0,.08);
-  margin-bottom:16px;
-}
-.cat{color:#666;font-size:13px;margin-bottom:6px}
-.q{font-size:18px;font-weight:600;margin-bottom:14px;white-space:pre-wrap}
-.opt{
-  display:block;width:100%;text-align:left;
-  padding:12px 14px;margin:8px 0;
-  border:1px solid #ccc;border-radius:10px;
-  background:#fff;cursor:pointer;font-size:16px
-}
-.opt:hover{background:#f0f0f5}
-.opt.correct{background:#d8f5d8;border-color:#4caf50}
-.opt.wrong{background:#ffd8d8;border-color:#e53935}
-.opt:disabled{cursor:default}
-.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-button.act{
-  padding:10px 16px;border:none;border-radius:10px;
-  background:#0071e3;color:#fff;font-size:15px;cursor:pointer
-}
-button.act.gray{background:#8e8e93}
-button.act.red{background:#e53935}
-button.act.green{background:#34a853}
-button.act:disabled{opacity:.6;cursor:not-allowed}
-.progress{font-size:14px;color:#555;margin-bottom:8px}
-.explain{margin-top:12px;font-size:14px;color:#444;background:#fafafa;padding:10px;border-radius:8px;white-space:pre-wrap}
-select{padding:8px;border-radius:8px;border:1px solid #ccc;font-size:15px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{border:1px solid #e0e0e0;padding:6px 8px;text-align:center}
-th{background:#f0f0f5}
-.hist-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-#topicBox{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-#topicBox label{background:#f0f0f5;padding:6px 12px;border-radius:20px;font-size:14px;cursor:pointer}
-#topicBox input{margin-right:4px}
-.cnt{color:#0071e3;font-weight:600}
-.total-line{font-size:13px;color:#555;margin-bottom:10px}
-.field{margin-bottom:10px}
-.field label{display:block;margin-bottom:4px;font-size:14px}
-.field input{width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;font-size:15px;box-sizing:border-box}
-#uploadStatus{margin-top:10px;font-size:13px;color:#555;white-space:pre-wrap}
-.history-wrapper{overflow-x:auto}
-.small-note{font-size:13px;color:#666;margin-top:8px}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MC 練習</title>
+  <style>
+    body{font-family:-apple-system,"Microsoft JhengHei",sans-serif;max-width:720px;margin:0 auto;padding:16px;background:#f5f5f7;color:#1d1d1f}
+    h1{font-size:22px}
+    .card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:16px}
+    .cat{color:#666;font-size:13px;margin-bottom:6px}
+    .q{font-size:18px;font-weight:600;margin-bottom:14px;white-space:pre-wrap}
+    .opt{display:block;width:100%;text-align:left;padding:12px 14px;margin:8px 0;border:1px solid #ccc;border-radius:10px;background:#fff;cursor:pointer;font-size:16px}
+    .opt:hover{background:#f0f0f5}
+    .opt.correct{background:#d8f5d8;border-color:#4caf50}
+    .opt.wrong{background:#ffd8d8;border-color:#e53935}
+    .opt:disabled{cursor:default}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+    button.act{padding:10px 16px;border:none;border-radius:10px;background:#0071e3;color:#fff;font-size:15px;cursor:pointer}
+    button.act.gray{background:#8e8e93}
+    button.act.red{background:#e53935}
+    button.act.green{background:#34a853}
+    .progress{font-size:14px;color:#555;margin-bottom:8px}
+    .explain{margin-top:12px;font-size:14px;color:#444;background:#fafafa;padding:10px;border-radius:8px;white-space:pre-wrap}
+    select{padding:8px;border-radius:8px;border:1px solid #ccc;font-size:15px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{border:1px solid #e0e0e0;padding:6px 8px;text-align:center}
+    th{background:#f0f0f5}
+    .hist-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    #topicBox{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+    #topicBox label{background:#f0f0f5;padding:6px 12px;border-radius:20px;font-size:14px;cursor:pointer}
+    #topicBox input{margin-right:4px}
+    .cnt{color:#0071e3;font-weight:600}
+    .total-line{font-size:13px;color:#555;margin-bottom:10px}
+    .field{margin-bottom:10px}
+    .field label{display:block;margin-bottom:4px;font-size:14px}
+    .field input{width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;font-size:15px;box-sizing:border-box}
+    #uploadStatus{margin-top:10px;font-size:13px;color:#555;white-space:pre-wrap}
+  </style>
 
-<script>
-window.MathJax = { tex: { inlineMath: [['\\(','\\)']] } };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 </head>
 
 <body>
-<h1>📝 數學 MC 練習</h1>
+  <h1>📝 MC 練習</h1>
 
-<div class="card">
-  <div style="margin-bottom:10px"><strong>選擇主題（可多選，做混合練習）</strong></div>
-  <div id="topicBox"></div>
-  <div class="total-line" id="totalLine"></div>
+  <div class="card">
+    <div style="margin-bottom:10px;"><strong>選擇主題（可多選，做混合練習）</strong></div>
+    <div id="topicBox"></div>
+    <div class="total-line" id="totalLine"></div>
 
-  <div class="controls">
-    <label>題數：
+    <div class="controls">
+      <label>題數：</label>
       <select id="countSelect">
         <option value="10">10 題</option>
         <option value="15">15 題</option>
         <option value="20">20 題</option>
         <option value="all">全部</option>
       </select>
-    </label>
-    <button class="act" onclick="startNormal()">開始練習</button>
-    <button class="act gray" onclick="startWrong()">錯題重溫 (<span id="wrongCount">0</span>)</button>
-  </div>
-
-  <div class="progress" id="progress"></div>
-  <div class="progress" id="scoreBar"></div>
-  <div class="progress" id="timerBar"></div>
-
-  <div class="small-note">本版本使用新版紀錄：mcwrong_v2 / mchistory_v2（乾淨重來）。</div>
-</div>
-
-<div id="quiz"></div>
-
-<div class="card" id="uploadCard" style="display:none">
-  <div style="margin-bottom:10px"><strong>學生資料與成績上傳</strong></div>
-  <div class="field"><label for="stuName">姓名：</label><input id="stuName" type="text" placeholder="請輸入姓名"></div>
-  <div class="field"><label for="stuClass">班別（例如：1A、2B、3C）：</label><input id="stuClass" type="text" placeholder="1A"></div>
-  <div class="field"><label for="stuNo">學號：</label><input id="stuNo" type="text" placeholder="請輸入學號"></div>
-  <button class="act green" id="uploadBtn" onclick="uploadResultToSheet()">上傳本次作答成績到老師 Google Sheet</button>
-  <div id="uploadStatus"></div>
-</div>
-
-<div class="card">
-  <div class="hist-head">
-    <strong>📈 歷史紀錄</strong>
-    <button class="act red" onclick="clearHistory()">清空紀錄</button>
-  </div>
-  <div id="historyBox"></div>
-</div>
-
-<script src="questions.js"></script>
-
-<script>
-// ==========================
-// v2 設定：乾淨重來
-// ==========================
-const WRONG_STORAGE_KEY = "mcwrong_v2";
-const HISTORY_STORAGE_KEY = "mchistory_v2";
-
-// ==========================
-// quiz 狀態
-// ==========================
-let pool = [];
-let idx = 0;
-let mode = "normal";
-let curCat = "";
-
-let wrongList = [];
-let history = [];
-
-let answered = 0;
-let correct = 0;
-
-let startTime = 0;
-let elapsed = 0;
-let timerId = null;
-
-// 本次答題紀錄（全部用 id）
-let sessionAnswers = [];
-
-// ==========================
-// 工具
-// ==========================
-function typeset(){
-  if(window.MathJax && MathJax.typesetPromise){
-    MathJax.typesetPromise().catch(() => {});
-  }
-}
-function fmt(sec){
-  sec = Number(sec) || 0;
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return m > 0 ? `${m}分${s}秒` : `${s}秒`;
-}
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i = a.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-function escapeHtml(s){
-  return String(s ?? "").replace(/[&<>"']/g, ch => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[ch]));
-}
-
-// ==========================
-// 題目 id：自動補穩定 id（基於內容）
-// ==========================
-function stableHash(str){
-  let h = 5381;
-  for(let i = 0; i < str.length; i++){
-    h = ((h << 5) + h) + str.charCodeAt(i);
-    h = h & 0xffffffff;
-  }
-  return "AUTO-" + (h >>> 0).toString(36);
-}
-function ensureQuestionIds(){
-  if(typeof QUESTIONS === "undefined" || !Array.isArray(QUESTIONS)) return;
-  const seen = new Set();
-  QUESTIONS.forEach(q => {
-    if(!q.id){
-      q.id = stableHash((q.category || "") + "|" + (q.question || ""));
-    }
-    const base = q.id;
-    let n = 1;
-    while(seen.has(q.id)){
-      q.id = `${base}_${n++}`;
-    }
-    seen.add(q.id);
-  });
-}
-function validateQuestions(){
-  if(typeof QUESTIONS === "undefined" || !Array.isArray(QUESTIONS)) return;
-  const errors = [];
-  const ids = new Set();
-  QUESTIONS.forEach((q, i) => {
-    const tag = `第 ${i+1} 題 (${q.id || "沒有 id"})`;
-    if(!q.id) errors.push(`${tag}：缺少 id`);
-    if(!q.category) errors.push(`${tag}：缺少 category`);
-    if(!q.question) errors.push(`${tag}：缺少 question`);
-    if(!Array.isArray(q.options) || q.options.length !== 4) errors.push(`${tag}：options 不是 4 個`);
-    if(!(Number.isInteger(q.answer) && q.answer >= 0 && q.answer <= 3)) errors.push(`${tag}：answer 不是 0 至 3`);
-    if(ids.has(q.id)) errors.push(`${tag}：id 重複 ${q.id}`);
-    ids.add(q.id);
-  });
-  if(errors.length) console.warn("題庫檢查發現問題：\n" + errors.join("\n"));
-}
-function keyOf(q){ return q.id; }
-
-// ==========================
-// localStorage：v2（乾淨重來）
-// ==========================
-function loadWrong(){
-  try{
-    const data = JSON.parse(localStorage.getItem(WRONG_STORAGE_KEY) || "[]");
-    if(!Array.isArray(data)) return [];
-    const validIds = new Set(QUESTIONS.map(q => q.id));
-    return Array.from(new Set(data.filter(id => validIds.has(id))));
-  }catch(e){
-    return [];
-  }
-}
-function saveWrong(){
-  wrongList = Array.from(new Set(wrongList));
-  localStorage.setItem(WRONG_STORAGE_KEY, JSON.stringify(wrongList));
-  const wc = document.getElementById("wrongCount");
-  if(wc) wc.textContent = wrongList.length;
-}
-function loadHistory(){
-  try{
-    const data = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  }catch(e){
-    return [];
-  }
-}
-function saveHistory(){
-  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
-}
-
-// ==========================
-// 歷史（含 id）
-// ==========================
-function addHistory(){
-  if(answered === 0) return;
-
-  const n = new Date();
-  const stamp =
-    `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,"0")}-${String(n.getDate()).padStart(2,"0")} ` +
-    `${String(n.getHours()).padStart(2,"0")}:${String(n.getMinutes()).padStart(2,"0")}`;
-
-  const rate = answered === 0 ? 0 : Math.round(correct / answered * 100);
-  const questionIds = pool.map(q => q.id);
-  const wrongIds = sessionAnswers.filter(a => !a.correct).map(a => a.id);
-
-  history.unshift({
-    time: stamp,
-    mode: mode === "wrong" ? "錯題重溫" : "練習",
-    cat: curCat,
-    correct,
-    total: answered,
-    rate,
-    sec: elapsed,
-    questionIds,
-    wrongIds,
-    answers: sessionAnswers
-  });
-
-  history = history.slice(0, 100);
-  saveHistory();
-  renderHistory();
-}
-
-function clearHistory(){
-  if(!confirm("確定清空 v2 歷史紀錄？")) return;
-  history = [];
-  saveHistory();
-  renderHistory();
-}
-
-function renderHistory(){
-  const box = document.getElementById("historyBox");
-  if(history.length === 0){
-    box.innerHTML = `<div style="color:#888">尚無 v2 歷史紀錄</div>`;
-    return;
-  }
-
-  let trend = "";
-  if(history.length >= 2){
-    const d = (history[0].rate || 0) - (history[1].rate || 0);
-    trend = d > 0
-      ? `<div style="color:#2e7d32;margin-bottom:8px">↑ 較上次進步 ${d}%</div>`
-      : d < 0
-        ? `<div style="color:#c62828;margin-bottom:8px">↓ 較上次退步 ${Math.abs(d)}%</div>`
-        : `<div style="color:#666;margin-bottom:8px">→ 與上次持平</div>`;
-  }else{
-    trend = `<div style="color:#666;margin-bottom:8px">完成多一次練習後會顯示趨勢</div>`;
-  }
-
-  const rows = history.map(h => `
-    <tr>
-      <td>${escapeHtml(h.time || "")}</td>
-      <td>${escapeHtml(h.mode || "")}</td>
-      <td>${escapeHtml(h.cat || "")}</td>
-      <td>${h.correct}/${h.total}</td>
-      <td>${h.rate}%</td>
-      <td>${fmt(h.sec || 0)}</td>
-      <td>${Array.isArray(h.wrongIds) ? h.wrongIds.length : 0}</td>
-    </tr>
-  `).join("");
-
-  box.innerHTML = `
-    ${trend}
-    <div class="history-wrapper">
-      <table>
-        <tr>
-          <th>時間</th><th>模式</th><th>主題</th><th>分數</th><th>正確率</th><th>用時</th><th>錯題</th>
-        </tr>
-        ${rows}
-      </table>
+      <button class="act" onclick="startNormal()">開始練習</button>
+      <button class="act gray" onclick="startWrong()">錯題重溫 (<span id="wrongCount">0</span>)</button>
     </div>
-    <div class="small-note">註：此表使用 v2 紀錄，錯題與作答資料已改用題目 id 儲存。</div>
-  `;
-}
 
-// ==========================
-// 計時 / 分數
-// ==========================
-function startTimer(){
-  startTime = Date.now();
-  elapsed = 0;
-  clearInterval(timerId);
-  timerId = setInterval(() => {
-    elapsed = Math.floor((Date.now() - startTime) / 1000);
-    document.getElementById("timerBar").textContent = `⏱ 時間：${fmt(elapsed)}`;
-  }, 1000);
-  document.getElementById("timerBar").textContent = "⏱ 時間：0秒";
-}
-function stopTimer(){
-  clearInterval(timerId);
-  timerId = null;
-  elapsed = Math.floor((Date.now() - startTime) / 1000);
-}
-function updateScore(){
-  const rate = answered === 0 ? 0 : Math.round(correct / answered * 100);
-  document.getElementById("scoreBar").textContent = `✅ 分數：${correct}/${answered}（${rate}%）`;
-}
+    <div class="progress" id="progress"></div>
+    <div class="progress" id="scoreBar"></div>
+    <div class="progress" id="timerBar"></div>
+  </div>
 
-// ==========================
-// 主題
-// ==========================
-function countByCat(){
-  const m = {};
-  QUESTIONS.forEach(q => { m[q.category] = (m[q.category] || 0) + 1; });
-  return m;
-}
-function initCategories(){
-  if(typeof QUESTIONS === "undefined"){
-    document.body.innerHTML = "<h2>找不到 questions.js</h2>";
-    return;
-  }
+  <div id="quiz"></div>
 
-  ensureQuestionIds();
-  validateQuestions();
+<div class="card" id="uploadCard" style="display:none;">
+  <div style="margin-bottom:10px;"><strong>學生資料與成績上傳</strong></div>
 
-  wrongList = loadWrong();
-  history = loadHistory();
+    <div class="field">
+      <label>姓名：</label>
+      <input id="stuName" type="text" placeholder="請輸入姓名">
+    </div>
 
-  const counts = countByCat();
-  const cats = Object.keys(counts);
-  const box = document.getElementById("topicBox");
+    <div class="field">
+      <label>班別（例如：1A、2B、3C）：</label>
+      <input id="stuClass" type="text" placeholder="例如：1A">
+    </div>
 
-  box.innerHTML =
-    `<label><input type="checkbox" id="topicAll" checked onchange="toggleAll()">全部</label>` +
-    cats.map(c => `
-      <label>
-        <input type="checkbox" class="topicChk" value="${escapeHtml(c)}" checked onchange="syncAll();updateTotal()">
-        ${escapeHtml(c)} <span class="cnt">${counts[c]}</span>
-      </label>
-    `).join("");
+    <div class="field">
+      <label>學號：</label>
+      <input id="stuNo" type="text" placeholder="請輸入學號">
+    </div>
 
-  saveWrong();
-  renderHistory();
-  updateTotal();
-  updateScore();
-}
-function toggleAll(){
-  const on = document.getElementById("topicAll").checked;
-  document.querySelectorAll(".topicChk").forEach(c => c.checked = on);
-  updateTotal();
-}
-function syncAll(){
-  const all = document.querySelectorAll(".topicChk");
-  const checked = document.querySelectorAll(".topicChk:checked");
-  document.getElementById("topicAll").checked = all.length === checked.length;
-}
-function selectedTopics(){
-  return Array.from(document.querySelectorAll(".topicChk:checked")).map(c => c.value);
-}
-function updateTotal(){
-  const topics = selectedTopics();
-  const total = QUESTIONS.filter(q => topics.includes(q.category)).length;
-  document.getElementById("totalLine").textContent =
-    topics.length === 0 ? "請至少選擇一個主題" : `已選 ${topics.length} 個主題，共 ${total} 題`;
-}
+    <button class="act green" onclick="uploadResultToSheet()">上傳本次作答成績到老師 Google Sheet</button>
+    <div id="uploadStatus"></div>
+  </div>
 
-// ==========================
-// 選項洗牌（在開始時把每題洗好）
-// ==========================
-function shuffleQuestionOptions(q){
-  const optionObjects = q.options.map((text, originalIndex) => ({ text, originalIndex }));
-  const shuffled = shuffle(optionObjects);
-  return {
-    ...q,
-    options: shuffled.map(o => o.text),
-    answer: shuffled.findIndex(o => o.originalIndex === q.answer),
-    originalAnswer: q.answer
-  };
-}
+  <div class="card">
+    <div class="hist-head">
+      <strong>📈 歷史紀錄</strong>
+      <button class="act red" onclick="clearHistory()">清空紀錄</button>
+    </div>
+    <div id="historyBox"></div>
+  </div>
 
-// ==========================
-// 開始練習
-// ==========================
-function startNormal(){
-  mode = "normal";
-  document.getElementById("uploadCard").style.display = "none";
+  <script src="questions.js"></script>
 
-  const uploadBtn = document.getElementById("uploadBtn");
-  if(uploadBtn) uploadBtn.disabled = false;
+  <script>
+    // ===== 原本的 quiz 程式（保留你的架構）=====
+    let pool, idx = 0, mode = 'normal', curCat;
+    let wrongList = loadWrong();
+    let history = loadHistory();
+    let answered = 0, correct = 0;
+    let startTime = 0, elapsed = 0, timerId = null;
 
-  const status = document.getElementById("uploadStatus");
-  if(status) status.textContent = "";
+    function typeset(){ if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(); }
+    function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return (m>0?m+'分':'')+s+'秒'; }
 
-  const topics = selectedTopics();
-  if(topics.length === 0){ alert("請至少選擇一個主題。"); return; }
+    function startTimer(){
+      startTime=Date.now(); elapsed=0;
+      clearInterval(timerId);
+      timerId=setInterval(()=>{ elapsed=Math.floor((Date.now()-startTime)/1000); document.getElementById('timerBar').textContent='已用時間：'+fmt(elapsed); },1000);
+      document.getElementById('timerBar').textContent='已用時間：0秒';
+    }
+    function stopTimer(){ clearInterval(timerId); timerId=null; elapsed=Math.floor((Date.now()-startTime)/1000); }
 
-  const allCats = Object.keys(countByCat());
-  curCat = topics.length === 1 ? topics[0] : (topics.length === allCats.length ? "全部" : topics.join("、"));
+    function updateScore(){
+      const rate = answered===0?0:Math.round(correct/answered*100);
+      document.getElementById('scoreBar').textContent='作答：'+correct+' / '+answered+' 題，正確率 '+rate+'%';
+    }
 
-  let list = QUESTIONS.filter(q => topics.includes(q.category));
-  list = shuffle(list);
+    function loadWrong(){ try{ return JSON.parse(localStorage.getItem('mcwrong'))||[]; }catch(e){ return []; } }
+    function saveWrong(){ localStorage.setItem('mcwrong',JSON.stringify(wrongList)); document.getElementById('wrongCount').textContent=wrongList.length; }
+    function keyOf(q){ return q.question; }
 
-  const want = document.getElementById("countSelect").value;
-  if(want !== "all"){
-    const n = parseInt(want, 10);
-    if(list.length < n){ alert(`此範圍只有 ${list.length} 題，不能抽 ${n} 題。`); return; }
-    list = list.slice(0, n);
-  }
+    function loadHistory(){ try{ return JSON.parse(localStorage.getItem('mchistory'))||[]; }catch(e){ return []; } }
+    function saveHistory(){ localStorage.setItem('mchistory',JSON.stringify(history)); }
 
-  pool = list.map(q => shuffleQuestionOptions(q));
+    function addHistory(){
+      if(answered===0) return;
+      const n=new Date();
+      const stamp=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')+' '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+      const rate=answered===0?0:Math.round(correct/answered*100);
+      history.unshift({ time:stamp, mode:(mode==='wrong'?'錯題重溫':'一般練習'), cat:(mode==='wrong'?'錯題混合':(curCat||'多主題混合')), correct, total:answered, rate, secs:elapsed });
+      saveHistory(); renderHistory();
+    }
 
-  idx = 0;
-  answered = 0;
-  correct = 0;
-  sessionAnswers = [];
+    function clearHistory(){ if(!confirm('確定要清空所有歷史紀錄？')) return; history=[]; saveHistory(); renderHistory(); }
 
-  updateScore();
-  startTimer();
-  render();
-}
+    function renderHistory(){
+      const box=document.getElementById('historyBox');
+      if(history.length===0){ box.innerHTML='<div style="color:#888;">目前沒有紀錄。</div>'; return; }
+      let trend='';
+      if(history.length>=2){
+        const d=history[0].rate-history[1].rate;
+        trend = d>0 ? '<div style="color:#2e7d32;margin-bottom:8px;">最近一次比上一次進步 '+d+'%</div>'
+              : d<0 ? '<div style="color:#c62828;margin-bottom:8px;">最近一次比上一次下降 '+(-d)+'%</div>'
+              : '<div style="color:#666;margin-bottom:8px;">最近兩次正確率一樣。</div>';
+      } else trend='<div style="color:#666;margin-bottom:8px;">目前只有一筆紀錄。</div>';
 
-function startWrong(){
-  mode = "wrong";
-  document.getElementById("uploadCard").style.display = "none";
+      const rows=history.map(h=>'<tr><td>'+h.time+'</td><td>'+h.mode+'</td><td>'+h.cat+'</td><td>'+h.correct+'/'+h.total+'</td><td>'+h.rate+'%</td><td>'+fmt(h.secs)+'</td></tr>').join('');
+      box.innerHTML=trend+'<table><tr><th>時間</th><th>模式</th><th>主題</th><th>成績</th><th>正確率</th><th>用時</th></tr>'+rows+'</table>';
+    }
 
-  const uploadBtn = document.getElementById("uploadBtn");
-  if(uploadBtn) uploadBtn.disabled = false;
+    function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+    function countByCat(){ const m={}; QUESTIONS.forEach(q=>m[q.category]=(m[q.category]||0)+1); return m; }
 
-  const status = document.getElementById("uploadStatus");
-  if(status) status.textContent = "";
+    function initCategories(){
+      if(typeof QUESTIONS==='undefined'){ document.body.innerHTML='<h2>找不到 questions.js</h2>'; return; }
+      const counts=countByCat(); const cats=Object.keys(counts); const box=document.getElementById('topicBox');
+      box.innerHTML =
+        '<label><input type="checkbox" id="topicAll" checked onchange="toggleAll()">全部</label>' +
+        cats.map(c=>'<label><input type="checkbox" class="topicChk" value="'+c+'" checked onchange="syncAll();updateTotal();">'+c+' (<span class="cnt">'+counts[c]+'</span>)</label>').join('');
+      saveWrong(); renderHistory(); updateTotal(); updateScore();
+    }
 
-  const wrongSet = new Set(wrongList);
-  let list = QUESTIONS.filter(q => wrongSet.has(q.id));
+    function toggleAll(){ const on=document.getElementById('topicAll').checked; document.querySelectorAll('.topicChk').forEach(c=>c.checked=on); updateTotal(); }
+    function syncAll(){ const all=document.querySelectorAll('.topicChk'); const checked=document.querySelectorAll('.topicChk:checked'); document.getElementById('topicAll').checked=(all.length===checked.length); }
+    function selectedTopics(){ return Array.from(document.querySelectorAll('.topicChk:checked')).map(c=>c.value); }
 
-  if(list.length === 0){ alert("目前沒有 v2 錯題可重溫。"); return; }
+    function updateTotal(){
+      const topics=selectedTopics();
+      const total=QUESTIONS.filter(q=>topics.includes(q.category)).length;
+      document.getElementById('totalLine').textContent = topics.length===0 ? '請先選擇至少一個主題。' : '目前選擇主題共有 '+total+' 題。';
+    }
 
-  pool = shuffle(list).map(q => shuffleQuestionOptions(q));
+    function startNormal(){
+      mode='normal';
+      document.getElementById('uploadCard').style.display = 'none';  // 新測驗開始→隱藏
+      const status=document.getElementById('uploadStatus');
+      if(status){ status.textContent=''; }                          // 清掉上次的訊息
+      const topics=selectedTopics();
+      if(topics.length===0){ alert('請先選擇主題。'); return; }
+      const allCats=Object.keys(countByCat());
+      curCat = topics.length===1 ? topics[0] : (topics.length===allCats.length ? '全部' : topics.join(' / '));
 
-  idx = 0;
-  answered = 0;
-  correct = 0;
-  curCat = "錯題重溫";
-  sessionAnswers = [];
+      let list=QUESTIONS.filter(q=>topics.includes(q.category));
+      list=shuffle(list);
 
-  updateScore();
-  startTimer();
-  render();
-}
+      const want=document.getElementById('countSelect').value;
+      if(want!=='all'){
+        const n=parseInt(want,10);
+        if(list.length<n) alert('目前只有 '+list.length+' 題，無法出 '+n+' 題。');
+        list=list.slice(0,n);
+      }
+      pool=list; idx=0; answered=0; correct=0;
+      updateScore(); startTimer(); render();
+    }
 
-// ==========================
-// 顯示題目
-// ==========================
-function render(){
-  const quiz = document.getElementById("quiz");
+    function startWrong(){
+      mode='wrong';
+      document.getElementById('uploadCard').style.display = 'none';  // 新測驗開始→隱藏
+      const status=document.getElementById('uploadStatus');
+      if(status){ status.textContent=''; }                          // 清掉上次的訊息
+      let list=QUESTIONS.filter(q=>wrongList.includes(keyOf(q)));
+      if(list.length===0){ alert('目前沒有錯題可以重溫。'); return; }
+      pool=shuffle(list); idx=0; answered=0; correct=0; curCat='錯題混合';
+      updateScore(); startTimer(); render();
+    }
 
-  if(idx >= pool.length){
-    stopTimer();
-    addHistory();
+    function render(){
+      const quiz=document.getElementById('quiz');
+      if(idx>=pool.length){
+        stopTimer(); addHistory();
+        const rate=answered?Math.round(correct/answered*100):0;
+        const avg=answered?Math.round(elapsed/answered*10)/10:0;
+        quiz.innerHTML =
+          '<div class="card"><div class="q">本次練習完成！</div>' +
+          '<div>模式：'+(mode==='wrong'?'錯題重溫':'一般練習')+'</div>' +
+          '<div>主題：'+(curCat||'多主題混合')+'</div>' +
+          '<div>成績：'+correct+' / '+answered+' 題，正確率 '+rate+'%</div>' +
+          '<div>總用時：'+fmt(elapsed)+'</div>' +
+          '<div>平均每題：'+avg+' 秒</div>' +
+          '<button class="act" style="margin-top:12px;" onclick="'+(mode==='wrong'?'startWrong()':'startNormal()')+'">再做一次</button></div>';
 
-    const rate = answered ? Math.round(correct / answered * 100) : 0;
-    const avg = answered ? Math.round(elapsed / answered * 10) / 10 : 0;
-    const wrongCountThisRound = sessionAnswers.filter(a => !a.correct).length;
+        document.getElementById('uploadCard').style.display = 'block';  // 測驗完成→顯示上傳區
+        document.getElementById('progress').textContent='';
+        return;
+      }
 
-    quiz.innerHTML = `
-      <div class="card">
-        <div class="q">🎉 完成！</div>
-        <div>模式：${mode === "wrong" ? "錯題重溫" : "正常練習"}</div>
-        <div>主題：${escapeHtml(curCat)}</div>
-        <div>成績：${correct}/${answered}（${rate}%）</div>
-        <div>本次錯題：${wrongCountThisRound} 題</div>
-        <div>用時：${fmt(elapsed)}</div>
-        <div>平均每題：${avg} 秒</div>
-        <button class="act" style="margin-top:12px" onclick="${mode === "wrong" ? "startWrong()" : "startNormal()"}">再做一次</button>
-      </div>
-    `;
+      const q=pool[idx];
+      document.getElementById('progress').textContent='第 '+(idx+1)+' 題 / 共 '+pool.length+' 題（模式：'+(mode==='wrong'?'錯題重溫':'一般練習')+'）';
 
-    document.getElementById("uploadCard").style.display = "block";
-    document.getElementById("progress").textContent = "";
-    return;
-  }
+      let html='<div class="card"><div class="cat">'+q.category+'</div><div class="q">'+q.question+'</div>';
+      q.options.forEach((opt,i)=>{ html+='<button class="opt" onclick="answer('+i+', this)">'+opt+'</button>'; });
+      html+='<div id="exp"></div></div>';
+      quiz.innerHTML=html;
+      typeset();
+    }
 
-  const q = pool[idx];
-  document.getElementById("progress").textContent =
-    `第 ${idx + 1} / ${pool.length} 題 ${mode === "wrong" ? "（錯題重溫）" : ""}`;
+    function answer(choice, btn){
+      const q=pool[idx];
+      const buttons=document.querySelectorAll('.opt');
+      buttons.forEach((b,i)=>{ b.disabled=true; if(i===q.answer) b.classList.add('correct'); });
 
-  let html = `
-    <div class="card">
-      <div class="cat">${escapeHtml(q.category)}</div>
-      <div class="q">${escapeHtml(q.question)}</div>
-  `;
+      const k=keyOf(q);
+      answered++;
+      if(choice===q.answer){
+        correct++;
+        wrongList=wrongList.filter(x=>x!==k);
+      } else {
+        btn.classList.add('wrong');
+        if(!wrongList.includes(k)) wrongList.push(k);
+      }
+      saveWrong(); updateScore();
 
-  q.options.forEach((opt, i) => {
-    html += `<button class="opt" onclick="answer(${i}, this)">${escapeHtml(opt)}</button>`;
-  });
+      if(q.explain){
+        document.getElementById('exp').innerHTML='<div class="explain">解釋：<br>'+q.explain+'</div>';
+        typeset();
+      }
 
-  html += `<div id="exp"></div></div>`;
-  quiz.innerHTML = html;
-  typeset();
-}
+      const card=document.getElementById('quiz').querySelector('.card');
+      const nextBtn=document.createElement('button');
+      nextBtn.className='act'; nextBtn.style.marginTop='12px';
+      nextBtn.textContent = (idx+1>=pool.length) ? '完成練習' : '下一題';
+      nextBtn.onclick=()=>{ idx++; render(); };
+      card.appendChild(nextBtn);
+    }
 
-// ==========================
-// 作答
-// ==========================
-function answer(choice, btn){
-  const q = pool[idx];
-  const buttons = document.querySelectorAll(".opt");
+    // ===== 上傳到 Google Sheet =====
+    const SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzrL--eEByEWLKbYeI8fLHY2xHMk5Yj9w-piIAQAe-fJd3u9eAuoRa1_PIluXZ_du8/exec'; // ← 改這行
 
-  buttons.forEach((b, i) => {
-    b.disabled = true;
-    if(i === q.answer) b.classList.add("correct");
-  });
+    function uploadResultToSheet(){
+      const name=document.getElementById('stuName').value.trim();
+      const className=document.getElementById('stuClass').value.trim();
+      const classNo=document.getElementById('stuNo').value.trim();
+      const status=document.getElementById('uploadStatus');
 
-  const id = keyOf(q);
-  const isCorrect = choice === q.answer;
+      if(!name || !className || !classNo){
+        status.textContent='請先填寫姓名、班別和學號。'; status.style.color='#c62828'; return;
+      }
+      if(answered===0){
+        status.textContent='你還沒有作答任何題目，請先作答再上傳成績。'; status.style.color='#c62828'; return;
+      }
+      if(SHEET_WEBAPP_URL.includes('XXXX')){
+        status.textContent='請先在 index.html 把 SHEET_WEBAPP_URL 改成老師的 Apps Script Web App URL。';
+        status.style.color='#c62828'; return;
+      }
 
-  answered++;
+      const rate = answered===0?0:Math.round(correct/answered*100);
+      const payload = { name, className, classNo, mode, category:curCat, answered, correct, rate, elapsedSeconds:elapsed };
 
-  if(isCorrect){
-    correct++;
-    wrongList = wrongList.filter(x => x !== id);
-  }else{
-    btn.classList.add("wrong");
-    if(!wrongList.includes(id)) wrongList.push(id);
-  }
+      status.textContent='上傳中...'; status.style.color='#555';
 
-  sessionAnswers.push({
-    id,
-    choice,
-    answer: q.answer,
-    originalAnswer: q.originalAnswer,
-    correct: isCorrect
-  });
-
-  saveWrong();
-  updateScore();
-
-  if(q.explain){
-    document.getElementById("exp").innerHTML = `<div class="explain">💡 解析：<br>${escapeHtml(q.explain)}</div>`;
-    typeset();
-  }
-
-  const card = document.getElementById("quiz").querySelector(".card");
-  const nextBtn = document.createElement("button");
-  nextBtn.className = "act";
-  nextBtn.style.marginTop = "12px";
-  nextBtn.textContent = idx + 1 >= pool.length ? "完成" : "下一題";
-  nextBtn.onclick = () => { idx++; render(); };
-  card.appendChild(nextBtn);
-}
-
-// ==========================
-// Google Sheet 上傳
-// ==========================
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzrL--eEByEWLKbYeI8fLHY2xHMk5Yj9w-piIAQAe-fJd3u9eAuoRa1PIluXZdu8/exec";
-
-function uploadResultToSheet(){
-  const name = document.getElementById("stuName").value.trim();
-  const className = document.getElementById("stuClass").value.trim();
-  const classNo = document.getElementById("stuNo").value.trim();
-  const status = document.getElementById("uploadStatus");
-  const btn = document.getElementById("uploadBtn");
-
-  if(!name || !className || !classNo){
-    status.textContent = "請先填寫姓名、班別、學號。";
-    status.style.color = "#c62828";
-    return;
-  }
-  if(answered === 0){
-    status.textContent = "尚未作答，無法上傳。";
-    status.style.color = "#c62828";
-    return;
-  }
-
-  const rate = answered === 0 ? 0 : Math.round(correct / answered * 100);
-
-  const payload = {
-    name, className, classNo,
-    mode, category: curCat,
-    answered, correct, rate,
-    elapsedSeconds: elapsed,
-
-    // v2：附帶 id 資料（可選，但很有用）
-    questionIds: pool.map(q => q.id),
-    wrongIds: sessionAnswers.filter(a => !a.correct).map(a => a.id),
-    answers: sessionAnswers
-  };
-
-  btn.disabled = true;
-  status.textContent = "上傳中…";
-  status.style.color = "#555";
-
-  fetch(SHEET_WEBAPP_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(payload)
-  })
-  .then(r => r.json())
-  .then(d => {
+      // 用 text/plain 避免 CORS 預檢
+      fetch(SHEET_WEBAPP_URL, {
+        method:'POST',
+        headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      })
+  .then(r=>r.json())
+  .then(d=>{
     if(d.ok){
-      status.textContent = "✅ 已成功上傳到老師 Google Sheet。";
-      status.style.color = "#2e7d32";
-    }else{
-      status.textContent = "上傳失敗：" + (d.error || "未知錯誤");
-      status.style.color = "#c62828";
-      btn.disabled = false;
+      status.textContent='上傳成功！如班別是新班別，老師的 Sheet 會自動新增同名分頁。';
+      status.style.color='#2e7d32';
+
+      // ★ 在上傳成功之後，把整個上傳卡片隱藏起來
+      const card = document.getElementById('uploadCard');
+      if (card) {
+        card.style.display = 'none';
+      }
+
+    } else {
+      status.textContent='上傳失敗：'+(d.error||'未知錯誤');
+      status.style.color='#c62828';
     }
   })
-  .catch(err => {
-    status.textContent = "上傳失敗（可能為網路或 CORS 問題）：" + err;
-    status.style.color = "#c62828";
-    btn.disabled = false;
-  });
-}
+      .catch(err=>{
+        status.textContent='上傳失敗（可能是 CORS / 網路問題）：'+err;
+        status.style.color='#c62828';
+      });
+    }
 
-// 初始化
-initCategories();
-</script>
+    initCategories();
+  </script>
 </body>
 </html>
