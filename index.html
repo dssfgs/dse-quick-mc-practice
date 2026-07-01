@@ -71,8 +71,8 @@
 
   <div id="quiz"></div>
 
-  <div class="card">
-    <div style="margin-bottom:10px;"><strong>學生資料與成績上傳</strong></div>
+<div class="card" id="uploadCard" style="display:none;">
+  <div style="margin-bottom:10px;"><strong>學生資料與成績上傳</strong></div>
 
     <div class="field">
       <label>姓名：</label>
@@ -184,6 +184,9 @@
 
     function startNormal(){
       mode='normal';
+      document.getElementById('uploadCard').style.display = 'none';  // 新測驗開始→隱藏
+      const status=document.getElementById('uploadStatus');
+      if(status){ status.textContent=''; }                          // 清掉上次的訊息
       const topics=selectedTopics();
       if(topics.length===0){ alert('請先選擇主題。'); return; }
       const allCats=Object.keys(countByCat());
@@ -204,6 +207,9 @@
 
     function startWrong(){
       mode='wrong';
+      document.getElementById('uploadCard').style.display = 'none';  // 新測驗開始→隱藏
+      const status=document.getElementById('uploadStatus');
+      if(status){ status.textContent=''; }                          // 清掉上次的訊息
       let list=QUESTIONS.filter(q=>wrongList.includes(keyOf(q)));
       if(list.length===0){ alert('目前沒有錯題可以重溫。'); return; }
       pool=shuffle(list); idx=0; answered=0; correct=0; curCat='錯題混合';
@@ -224,6 +230,8 @@
           '<div>總用時：'+fmt(elapsed)+'</div>' +
           '<div>平均每題：'+avg+' 秒</div>' +
           '<button class="act" style="margin-top:12px;" onclick="'+(mode==='wrong'?'startWrong()':'startNormal()')+'">再做一次</button></div>';
+
+        document.getElementById('uploadCard').style.display = 'block';  // 測驗完成→顯示上傳區
         document.getElementById('progress').textContent='';
         return;
       }
@@ -268,7 +276,7 @@
     }
 
     // ===== 上傳到 Google Sheet =====
-    const SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/XXXX/exec'; // ← 改這行
+    const SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzrL--eEByEWLKbYeI8fLHY2xHMk5Yj9w-piIAQAe-fJd3u9eAuoRa1_PIluXZ_du8/exec'; // ← 改這行
 
     function uploadResultToSheet(){
       const name=document.getElementById('stuName').value.trim();
@@ -298,16 +306,23 @@
         headers:{ 'Content-Type':'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       })
-      .then(r=>r.json())
-      .then(d=>{
-        if(d.ok){
-          status.textContent='上傳成功！如班別是新班別，老師的 Sheet 會自動新增同名分頁。';
-          status.style.color='#2e7d32';
-        } else {
-          status.textContent='上傳失敗：'+(d.error||'未知錯誤');
-          status.style.color='#c62828';
-        }
-      })
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.ok){
+      status.textContent='上傳成功！如班別是新班別，老師的 Sheet 會自動新增同名分頁。';
+      status.style.color='#2e7d32';
+
+      // ★ 在上傳成功之後，把整個上傳卡片隱藏起來
+      const card = document.getElementById('uploadCard');
+      if (card) {
+        card.style.display = 'none';
+      }
+
+    } else {
+      status.textContent='上傳失敗：'+(d.error||'未知錯誤');
+      status.style.color='#c62828';
+    }
+  })
       .catch(err=>{
         status.textContent='上傳失敗（可能是 CORS / 網路問題）：'+err;
         status.style.color='#c62828';
