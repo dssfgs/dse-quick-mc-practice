@@ -492,7 +492,7 @@ const QUESTIONS = [
   explain: "化為底數 3：分子 \\(3^{6n+2}\\)，分母 \\(3^{2n+3}\\cdot 3^{6n+3}=3^{8n+6}\\)，相除得 \\(3^{-2n-4}=9^{-n-2}\\)。"
 },
 {
-  category: "多項式",
+  category: "因式分解",
   question: "\\( (2\\alpha-\\beta)^{2}+(\\alpha-2\\beta)^{2} = \\)",
   options: ["\\(3\\alpha^{2}-4\\alpha\\beta+3\\beta^{2}\\)", "\\(3\\alpha^{2}-8\\alpha\\beta+3\\beta^{2}\\)", "\\(5\\alpha^{2}-4\\alpha\\beta+5\\beta^{2}\\)", "\\(5\\alpha^{2}-8\\alpha\\beta+5\\beta^{2}\\)"],
   answer: 3,
