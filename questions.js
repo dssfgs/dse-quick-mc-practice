@@ -478,7 +478,7 @@ const QUESTIONS = [
   explain: "左式 \\((p+1)x^{2}-px\\)，右式 \\(qx^{2}+(4-2q)x\\)。由 \\(p+1=q\\) 及 \\(-p=4-2q\\) 解得 \\(p=2\\)。"
 },
 {
-  category: "代數分式",
+  category: "公式變換",
   question: "\\( \\dfrac{1}{k+2}+\\dfrac{3}{5k-6} = \\)",
   options: ["\\(\\dfrac{-8k}{(k+2)(5k-6)}\\)", "\\(\\dfrac{-2k}{(k+2)(5k-6)}\\)", "\\(\\dfrac{2k}{(k+2)(5k-6)}\\)", "\\(\\dfrac{8k}{(k+2)(5k-6)}\\)"],
   answer: 3,
