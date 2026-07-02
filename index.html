@@ -399,12 +399,22 @@ function uploadResultToSheet(){
   const rate=answered===0?0:Math.round(correct/answered*100);
   const payload={name,className,classNo,mode,category:curCat,answered,correct,rate,elapsedSeconds:elapsed};
   status.textContent="上傳中…"; status.style.color="#555";
-  fetch(SHEET_WEBAPP_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
-    .then(r=>r.json()).then(d=>{
-      if(d.ok){ status.textContent="✅ 已上傳到 Google Sheet。"; status.style.color="#2e7d32"; const card=document.getElementById("uploadCard"); if(card) card.style.display="none"; }
-      else { status.textContent="上傳失敗："+d.error; status.style.color="#c62828"; }
-    }).catch(err=>{ status.textContent="上傳失敗（可能是 CORS 或網絡問題）"; status.style.color="#c62828"; });
-}
+fetch(SHEET_WEBAPP_URL, {
+  method: "POST",
+  mode: "no-cors",
+  headers: { "Content-Type": "text/plain;charset=utf-8" },
+  body: JSON.stringify(payload)
+})
+.then(() => {
+  status.textContent = "✅ 已送出成績（請老師核對 Google Sheet 是否收到）";
+  status.style.color = "#2e7d32";
+  const card = document.getElementById("uploadCard");
+  if (card) card.style.display = "none";
+})
+.catch(() => {
+  status.textContent = "上傳失敗（網絡問題），請重試";
+  status.style.color = "#c62828";
+});
 
 initCategories();
 </script>
